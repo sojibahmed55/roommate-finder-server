@@ -70,27 +70,7 @@ async function run() {
 
         //
 
-        app.post('/roommate', async (req, res) => {
-            const roommateData = req.body;
-            if (!roommateData.userEmail) {
-                return res.status(400).send({ error: 'userEmail is required' });
-            }
-            const result = await roommatesCollection.insertOne(roommateData);
-            res.send(result);
-        });
-
-        app.get("/featured-roommates", async (req, res) => {
-            const query = {
-                availability: { $in: ["Available", true] }
-            };
-
-            const result = await roommatesCollection
-                .find(query)
-                .limit(6)
-                .toArray();
-            res.send(result);
-        });
-
+        
 
 
 
