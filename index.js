@@ -34,17 +34,17 @@ async function run() {
         //     res.send(result);
         // });
 
-        //         app.get('/roommate', async (req, res) => {
-        //     try {
-        //         const featuredRoommates = await roommatesCollection
-        //             .find({ availability: "Available" }) 
-        //             .toArray();
-        //         res.send(featuredRoommates);
-        //     } catch (error) {
-        //         console.error(error);
-        //         res.status(500).send({ error: "Server error" });
-        //     }
-        // });
+                app.get('/roommate', async (req, res) => {
+            try {
+                const featuredRoommates = await roommatesCollection
+                    .find({ availability: "Available" }) 
+                    .toArray();
+                res.send(featuredRoommates);
+            } catch (error) {
+                console.error(error);
+                res.status(500).send({ error: "Server error" });
+            }
+        });
 
 
         //
