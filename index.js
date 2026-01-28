@@ -28,11 +28,11 @@ async function run() {
         const roommatesCollection = client.db('roommateFinder').collection('roommate');
 
 
-        // app.post('/roommate', async (req, res) => {
-        //     const roommateData = req.body;
-        //     const result = await roommatesCollection.insertOne(roommateData);
-        //     res.send(result);
-        // });
+        app.post('/roommate', async (req, res) => {
+            const roommateData = req.body;
+            const result = await roommatesCollection.insertOne(roommateData);
+            res.send(result);
+        });
 
                 app.get('/roommate', async (req, res) => {
             try {
