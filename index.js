@@ -55,7 +55,6 @@ async function run() {
             const filter = { _id: new ObjectId(id) };
             const post = await roommatesCollection.findOne(filter);
 
-            // own post like block
             if (post.userEmail === userEmail) {
                 return res.status(403).send({ message: "You cannot like your own post" });
             }
@@ -70,7 +69,27 @@ async function run() {
 
         //
 
-        
+        app.post('/roommate', async (req, res) => {
+            const roommateData = req.body;
+            if (!roommateData.userEmail) {
+                return res.status(400).send({ error: 'userEmail is required' });
+            }
+            const result = await roommatesCollection.insertOne(roommateData);
+            res.send(result);
+        });
+
+        app.get("/featured-roommates", async (req, res) => {
+            const query = {
+                availability: { $in: ["Available", true] }
+            };
+
+            const result = await roommatesCollection
+                .find(query)
+                .limit(6)
+                .toArray();
+            res.send(result);
+        });
+
 
 
 
@@ -100,13 +119,13 @@ async function run() {
 
 
 
-        //
-        // app.get('/roommate', async (req, res) => {
-        //     const userEmail = req.query.email;
-        //     if (!userEmail) return res.send([]);
-        //     const result = await roommatesCollection.find({ userEmail }).toArray();
-        //     res.send(result);
-        // });
+        
+        app.get('/roommate', async (req, res) => {
+            const userEmail = req.query.email;
+            if (!userEmail) return res.send([]);
+            const result = await roommatesCollection.find({ userEmail }).toArray();
+            res.send(result);
+        });
 
 
 
