@@ -28,26 +28,6 @@ async function run() {
         const roommatesCollection = client.db('roommateFinder').collection('roommate');
 
 
-        app.post('/roommate', async (req, res) => {
-            const roommateData = req.body;
-            const result = await roommatesCollection.insertOne(roommateData);
-            res.send(result);
-        });
-
-                app.get('/roommate', async (req, res) => {
-            try {
-                const featuredRoommates = await roommatesCollection
-                    .find({ availability: "Available" }) 
-                    .toArray();
-                res.send(featuredRoommates);
-            } catch (error) {
-                console.error(error);
-                res.status(500).send({ error: "Server error" });
-            }
-        });
-
-
-        //
         app.patch("/roommate/like/:id", async (req, res) => {
             const id = req.params.id;
             const { userEmail } = req.body;
@@ -119,16 +99,6 @@ async function run() {
 
 
 
-        
-        app.get('/roommate', async (req, res) => {
-            const userEmail = req.query.email;
-            if (!userEmail) return res.send([]);
-            const result = await roommatesCollection.find({ userEmail }).toArray();
-            res.send(result);
-        });
-
-
-
         app.get("/roommate-by-email", async (req, res) => {
             const email = req.query.email;
             if (!email) {
@@ -141,16 +111,6 @@ async function run() {
         });
 
 
-        app.delete("/roommates/:id", async (req, res) => {
-          const id = req.params.id;
-          const result = await roommatesCollection.deleteOne({ _id: new ObjectId(id) });
-          res.send(result);
-        });
-
-
-
-
-        //
 
         app.put('/roommate/:id', async (req, res) => {
             const id = req.params.id;
@@ -162,7 +122,6 @@ async function run() {
             }
 
             const result = await roommatesCollection.updateOne(filter, updateDoc, options);
-            console.log(result);
             res.send(result)
         })
 
